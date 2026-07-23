@@ -11,5 +11,5 @@ export const siteMetadata: Metadata = {
   },
   description: 'Essays on making, attention, technology, and quiet systems by keta.',
   authors: [{ name: 'keta', url: 'https://github.com/keta1930' }],
-  icons: { icon: `${basePath}/icon.svg` },
+  manifest: `${basePath}/manifest.webmanifest`,
 };

@@ -14,6 +14,9 @@ export const docs = defineDocs({
       updatedAt: z.iso.date(),
       readingTime: z.number().int().positive(),
       slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+      audio: z.object({
+        src: z.string().regex(/^\.\/assets\/[a-zA-Z0-9][a-zA-Z0-9._-]*\.(?:mp3|m4a|ogg|wav)$/i),
+      }).optional(),
     }),
   },
   meta: {

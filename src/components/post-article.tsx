@@ -1,5 +1,6 @@
 import { CopyMarkdownButton } from '@/components/copy-markdown-button';
 import { getMDXComponents } from '@/components/mdx';
+import { PostAudioPlayer } from '@/components/post-audio-player';
 import { PostComments } from '@/components/post-comments';
 import { PostToc } from '@/components/post-toc';
 import type { SiteLocale } from '@/lib/i18n';
@@ -8,6 +9,7 @@ import {
   formatReadingTime,
   getAdjacentPosts,
   getPost,
+  getPostAudioUrl,
 } from '@/lib/posts';
 import { getPageImage, getPageMarkdownUrl, source } from '@/lib/source';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
@@ -29,6 +31,7 @@ export async function PostArticle({
   const { previous, next } = getAdjacentPosts(post, locale);
   const isChinese = locale === 'zh';
   const MDX = post.data.body;
+  const audioUrl = getPostAudioUrl(post);
   const markdownUrl = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${getPageMarkdownUrl(post).url}`;
 
   return (
@@ -57,6 +60,10 @@ export async function PostArticle({
             <CopyMarkdownButton markdownUrl={markdownUrl} isChinese={isChinese} />
           </div>
         </header>
+
+        {audioUrl ? (
+          <PostAudioPlayer key={audioUrl} src={audioUrl} isChinese={isChinese} />
+        ) : null}
 
         <DocsBody className="post-body">
           <MDX

@@ -12,6 +12,7 @@ node_modules/
 .next/
 out/
 .source/
+public/audio/
 
 # Build and test output
 build/

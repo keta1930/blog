@@ -39,3 +39,12 @@ export function formatPostDate(date: string, locale: SiteLocale): string {
 export function formatReadingTime(minutes: number, locale: SiteLocale): string {
   return locale === 'zh' ? `约 ${minutes} 分钟读完` : `${minutes} min read`;
 }
+
+export function getPostAudioUrl(post: PostPage): string | undefined {
+  const sourcePath = post.data.audio?.src;
+  if (!sourcePath) return undefined;
+
+  const filename = sourcePath.slice(sourcePath.lastIndexOf('/') + 1);
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+  return `${basePath}/audio/${post.data.slug}/${encodeURIComponent(filename)}`;
+}

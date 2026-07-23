@@ -8,6 +8,12 @@ const repo = process.env.NEXT_PUBLIC_GISCUS_REPO;
 const repoId = process.env.NEXT_PUBLIC_GISCUS_REPO_ID;
 const category = process.env.NEXT_PUBLIC_GISCUS_CATEGORY;
 const categoryId = process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID;
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://keta1930.github.io/blog').replace(/\/$/, '');
+
+const giscusThemes = {
+  light: `${siteUrl}/giscus-light.css`,
+  dark: `${siteUrl}/giscus-dark.css`,
+} as const;
 
 const giscusConfig = repo && repo.includes('/') && repoId && category && categoryId
   ? {
@@ -42,7 +48,7 @@ export function PostComments({ slug, locale }: { slug: string; locale: SiteLocal
         reactionsEnabled="1"
         emitMetadata="0"
         inputPosition="top"
-        theme={resolvedTheme === 'dark' ? 'noborder_dark' : 'noborder_light'}
+        theme={resolvedTheme === 'dark' ? giscusThemes.dark : giscusThemes.light}
         lang={isChinese ? 'zh-CN' : 'en'}
         loading="lazy"
       />

@@ -14,7 +14,7 @@ The site supports English and Chinese posts, global search, light and dark theme
 | `D` | Toggle light and dark themes |
 | `L` | Switch between English and Chinese |
 | `H` | Return to the home page |
-| `M` | Copy the current post as Markdown |
+| `M` | Copy the current post text |
 
 Shortcuts are disabled while typing in an input, textarea, select, or editable element. `M` is available on post pages.
 

@@ -20,12 +20,13 @@ The production site is <https://keta1930.github.io/blog>. The experience is calm
 | Search | Fumadocs static search with separate English and Mandarin Orama indexes |
 | Comments | Giscus backed by GitHub Discussions, with project-owned light and dark themes |
 | Audio | Optional per-language article audio declared in frontmatter |
+| App identity | Web app manifest with tree artwork derived from the first post’s visual language |
 | Syndication | RSS at `/rss.xml` |
 | AI discovery | `/llms.txt` and per-post clean Markdown output; no `llms-full.txt` |
 
 The public site includes:
 
-- A home page featuring the latest post and a vintage-style animation
+- A home page featuring the latest post and a four-frame vintage tree-growth study that plays once per browser, with wind and falling leaves on hover
 - About, Posts, and FAQs pages in both languages
 - Global search, theme switching, and language switching on every page
 - Article metadata, reading progress, table of contents, adjacent-post navigation, and responsive long-form typography
@@ -56,7 +57,7 @@ Keyboard shortcuts:
 | `D` | Toggle the light or dark theme |
 | `L` | Switch language while preserving the current route |
 | `H` | Return to the localized home page |
-| `M` | Copy the current article as Markdown |
+| `M` | Copy the current article text |
 
 Shortcut handlers ignore inputs, textareas, selects, and editable elements. `M` is registered only on article pages.
 

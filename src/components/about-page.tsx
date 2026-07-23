@@ -6,7 +6,7 @@ const shortcuts = [
   { keys: 'D', en: 'Toggle light/dark mode', zh: '切换明暗模式' },
   { keys: 'L', en: 'Switch language', zh: '切换语言' },
   { keys: 'H', en: 'Return home', zh: '回到首页' },
-  { keys: 'M', en: 'Copy post Markdown', zh: '复制文章的 Markdown' },
+  { keys: 'M', en: 'Copy full post text', zh: '复制全文' },
 ];
 
 export function AboutPage({ locale }: { locale: SiteLocale }) {

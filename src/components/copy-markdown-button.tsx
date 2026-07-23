@@ -57,8 +57,8 @@ export function CopyMarkdownButton({
   }, [copyMarkdown]);
 
   const labels = isChinese
-    ? { idle: '复制 Markdown', copying: '复制中…', copied: '已复制', error: '复制失败' }
-    : { idle: 'Copy Markdown', copying: 'Copying…', copied: 'Copied', error: 'Copy failed' };
+    ? { idle: '复制全文', copying: '复制中…', copied: '已复制', error: '复制失败' }
+    : { idle: 'COPY TEXT', copying: 'Copying…', copied: 'Copied', error: 'Copy failed' };
   const isCopied = status === 'copied';
 
   return (
@@ -66,7 +66,7 @@ export function CopyMarkdownButton({
       type="button"
       className="copy-markdown-button"
       onClick={() => void copyMarkdown()}
-      title={isChinese ? '复制 Markdown（快捷键：M）' : 'Copy Markdown (keyboard shortcut: M)'}
+      title={isChinese ? '复制全文（快捷键：M）' : 'COPY TEXT (keyboard shortcut: M)'}
       aria-live="polite"
     >
       {isCopied ? <Check size={15} /> : <Copy size={15} />}

@@ -368,105 +368,146 @@ a {
   letter-spacing: 0.12em;
 }
 
-.vintage-instrument {
+.tree-study {
   position: relative;
-  width: 250px;
-  height: 250px;
-  margin: 48px auto 32px;
-  border: 1px solid var(--ink);
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 8px var(--paper-deep), inset 0 0 0 9px var(--line-strong);
+  z-index: 1;
+  width: min(100%, 330px);
+  height: 310px;
+  margin: 24px auto 12px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--ink) 28%, transparent);
+  background:
+    repeating-linear-gradient(0deg, transparent 0 7px, rgba(63, 50, 32, 0.018) 7px 8px),
+    #efe5d2;
+  box-shadow: inset 0 0 26px rgba(80, 60, 35, 0.08);
+  cursor: default;
+  isolation: isolate;
 }
 
-.dial-marks,
-.orbit,
-.dial-center,
-.dial-needle {
+.tree-study::after {
   position: absolute;
-  inset: 50%;
+  right: 11px;
+  bottom: 9px;
+  color: rgba(55, 82, 64, 0.58);
+  content: '04 / 04';
+  font-family: 'Courier New', monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.09em;
 }
 
-.dial-marks span {
-  --mark: 0;
+.tree-growth-stage {
   position: absolute;
-  width: 1px;
-  height: 8px;
-  background: var(--ink);
-  transform: rotate(calc(var(--mark) * 30deg)) translateY(-116px);
-  transform-origin: 0 116px;
-}
-
-.orbit {
-  border: 1px solid color-mix(in srgb, var(--ink) 62%, transparent);
-  border-radius: 50%;
-  transform-origin: center;
-}
-
-.orbit span {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  top: -5px;
-  left: calc(50% - 5px);
-  border: 1px solid var(--ink);
-  border-radius: 50%;
-  background: var(--signal);
-}
-
-.orbit-outer {
-  width: 178px;
-  height: 178px;
-  margin: -89px;
-  animation: orbit-spin 16s linear infinite;
-}
-
-.orbit-inner {
-  width: 120px;
-  height: 120px;
-  margin: -60px;
-  border-style: dashed;
-  animation: orbit-spin 11s linear infinite reverse;
-}
-
-.orbit-inner span {
-  width: 7px;
-  height: 7px;
-  top: -4px;
-  background: var(--rust);
-}
-
-.dial-center {
-  width: 68px;
-  height: 68px;
-  margin: -34px;
+  inset: 7px;
   display: grid;
   place-items: center;
-  border: 1px solid var(--ink);
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: 50% 87%;
+}
+
+.tree-growth-stage img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  transform-origin: 50% 87%;
+  user-select: none;
+}
+
+.tree-animation--settled .tree-growth-stage-4 {
+  opacity: 1;
+}
+
+.tree-animation--growing .tree-growth-stage-1 {
+  animation: tree-frame-one 3.2s steps(1, end) both;
+}
+
+.tree-animation--growing .tree-growth-stage-2 {
+  animation: tree-frame-two 3.2s steps(1, end) both;
+}
+
+.tree-animation--growing .tree-growth-stage-3 {
+  animation: tree-frame-three 3.2s steps(1, end) both;
+}
+
+.tree-animation--growing .tree-growth-stage-4 {
+  animation: tree-frame-four 3.2s steps(1, end) both;
+}
+
+.wind-lines {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.wind-lines span {
+  position: absolute;
+  left: -42%;
+  width: 112px;
+  height: 20px;
+  opacity: 0;
+  border-top: 1px dashed rgba(164, 84, 57, 0.68);
   border-radius: 50%;
-  background: var(--paper-deep);
-  font-family: 'Courier New', monospace;
 }
 
-.center-star {
-  margin-top: 8px;
-  color: var(--rust);
-  font-size: 1.2rem;
+.wind-lines span:nth-child(1) {
+  top: 25%;
 }
 
-.dial-center small {
-  margin-top: -15px;
-  font-size: 0.47rem;
-  letter-spacing: 0.12em;
+.wind-lines span:nth-child(2) {
+  top: 42%;
+  width: 148px;
+  animation-delay: 0.35s;
 }
 
-.dial-needle {
-  width: 2px;
-  height: 98px;
-  margin-left: -1px;
-  margin-top: -98px;
-  background: var(--rust);
-  transform-origin: bottom center;
-  animation: needle-scan 4.8s ease-in-out infinite alternate;
+.wind-lines span:nth-child(3) {
+  top: 57%;
+  width: 94px;
+  animation-delay: 0.8s;
+}
+
+.tree-study:hover .wind-lines span {
+  animation-name: wind-pass;
+  animation-duration: 1.9s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.tree-study:hover .tree-growth-stage img {
+  animation: tree-wind 1.55s ease-in-out infinite alternate;
+}
+
+.falling-leaves {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.falling-leaf {
+  position: absolute;
+  width: 8px;
+  height: 4px;
+  top: var(--leaf-top);
+  left: var(--leaf-left);
+  opacity: 0;
+  border-radius: 80% 0 80% 0;
+  background: #3f614e;
+}
+
+.falling-leaf:nth-child(3n) {
+  background: #a45439;
+}
+
+.tree-study:hover .falling-leaf {
+  animation-name: leaf-fall;
+  animation-delay: var(--leaf-delay);
+  animation-duration: var(--leaf-duration);
+  animation-timing-function: ease-in;
+  animation-iteration-count: infinite;
 }
 
 .vintage-visual > p {
@@ -479,13 +520,69 @@ a {
   line-height: 1.6;
 }
 
-@keyframes orbit-spin {
-  to { transform: rotate(360deg); }
+@keyframes tree-frame-one {
+  0%, 24.99% {
+    opacity: 1;
+    transform: translateY(82px) scale(0.34);
+  }
+  25%, 100% { opacity: 0; }
 }
 
-@keyframes needle-scan {
-  from { transform: rotate(-52deg); }
-  to { transform: rotate(58deg); }
+@keyframes tree-frame-two {
+  0%, 24.99% { opacity: 0; }
+  25%, 49.99% {
+    opacity: 1;
+    transform: translateY(57px) scale(0.54);
+  }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes tree-frame-three {
+  0%, 49.99% { opacity: 0; }
+  50%, 74.99% {
+    opacity: 1;
+    transform: translateY(29px) scale(0.76);
+  }
+  75%, 100% { opacity: 0; }
+}
+
+@keyframes tree-frame-four {
+  0%, 74.99% { opacity: 0; }
+  75%, 100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes tree-wind {
+  0% { transform: rotate(-0.7deg) skewX(-0.35deg); }
+  45% { transform: rotate(1.35deg) skewX(0.7deg); }
+  100% { transform: rotate(-0.15deg) skewX(0.15deg); }
+}
+
+@keyframes wind-pass {
+  0% {
+    opacity: 0;
+    transform: translateX(0) scaleX(0.72);
+  }
+  18% { opacity: 0.72; }
+  78% { opacity: 0.42; }
+  100% {
+    opacity: 0;
+    transform: translateX(470px) scaleX(1.08);
+  }
+}
+
+@keyframes leaf-fall {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  13% { opacity: 0.82; }
+  100% {
+    opacity: 0;
+    transform: translate(var(--leaf-drift), 188px) rotate(var(--leaf-turn));
+  }
 }
 
 .home-now-section {
@@ -1471,27 +1568,9 @@ html > body[data-scroll-locked] {
     padding: 19px;
   }
 
-  .vintage-instrument {
-    width: 210px;
-    height: 210px;
-    margin-top: 46px;
-  }
-
-  .dial-marks span {
-    transform: rotate(calc(var(--mark) * 30deg)) translateY(-96px);
-    transform-origin: 0 96px;
-  }
-
-  .orbit-outer {
-    width: 150px;
-    height: 150px;
-    margin: -75px;
-  }
-
-  .orbit-inner {
-    width: 102px;
-    height: 102px;
-    margin: -51px;
+  .tree-study {
+    height: 275px;
+    margin-top: 20px;
   }
 
   .home-now-section {

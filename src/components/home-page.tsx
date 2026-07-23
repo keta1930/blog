@@ -18,8 +18,8 @@ export function HomePage({ locale }: { locale: SiteLocale }) {
           </h1>
           <p className="hero-copy">
             {isChinese
-              ? '记录创造、注意力、技术，以及那些不断生长变化的细微观察。'
-              : 'Writing on making, attention, technology, and the small observations that keep changing shape.'}
+              ? '让想法像树一样生长。'
+              : 'Let ideas grow like trees.'}
           </p>
           <div className="hero-actions">
             <Link href={isChinese ? '/zh/posts' : '/posts'} className="button-primary">

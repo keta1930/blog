@@ -22,18 +22,18 @@ The production site is <https://keta1930.github.io/blog>. The experience is calm
 | Audio | Optional per-language article audio declared in frontmatter |
 | App identity | Web app manifest with tree artwork derived from the first post’s visual language |
 | Syndication | RSS at `/rss.xml` |
-| AI discovery | `/llms.txt` and per-post clean Markdown output; no `llms-full.txt` |
+| AI discovery | `/llms.txt` and per-post source Markdown output; no `llms-full.txt` |
 
 The public site includes:
 
 - A home page featuring the latest post and a four-frame vintage tree-growth study that plays once per browser, with wind and falling leaves on hover
 - About, Posts, and FAQs pages in both languages
 - Global search, theme switching, and language switching on every page
-- Article metadata, reading progress, table of contents, adjacent-post navigation, and responsive long-form typography
+- Article metadata, table of contents, adjacent-post navigation, and responsive long-form typography
 - Styled code blocks with language labels, tables, Mermaid diagrams, and KaTeX formulas
 - One-click Markdown copying and Giscus comments on article pages
 - Optional article audio with playback, seeking, elapsed and total time, and playback-rate controls
-- RSS, Open Graph images, `llms.txt`, and clean Markdown routes generated from the content source
+- RSS, Open Graph images, `llms.txt`, and source Markdown routes generated from the content source
 
 The site has no application backend, contact form, email subscription, server actions, persistent Node.js runtime, or runtime-only API routes.
 
@@ -80,7 +80,7 @@ The principal directories are:
 └── source.config.ts         # MDX collection and frontmatter schema
 ```
 
-Generated directories such as `out/`, `.next/`, `node_modules/`, and `public/audio/` are not authored sources and are not committed.
+Generated directories such as `out/`, `.next/`, `.source/`, `node_modules/`, and `public/audio/` are not authored sources and are not committed.
 
 ## Content model
 
@@ -105,6 +105,7 @@ Required frontmatter:
 ---
 title: A post title
 slug: a-post-title
+category: insight
 description: A concise summary used by lists, search, feeds, and metadata.
 publishedAt: '2026-07-22'
 updatedAt: '2026-07-22'
@@ -114,13 +115,14 @@ readingTime: 5
 
 Schema rules:
 
+- `category` is `resource`, `insight`, or `research`; paired language files use the same value.
 - `slug` uses lowercase letters, numbers, and hyphens.
 - `publishedAt` and `updatedAt` use `YYYY-MM-DD`.
 - `readingTime` is a positive integer in minutes.
 - Each language file contains its own title, description, body, and optional audio declaration.
 - Ordinary prose stays in Markdown; MDX components are reserved for content that materially benefits from interaction.
 
-Adding or editing MDX automatically updates the home page, Posts archive, article routes, adjacent-post navigation, search indexes, RSS, Open Graph metadata, `llms.txt`, and clean Markdown output.
+Adding or editing MDX automatically updates the home page, Posts archive, article routes, adjacent-post navigation, search indexes, RSS, Open Graph metadata, `llms.txt`, and source Markdown output.
 
 ### Article audio
 
@@ -138,7 +140,7 @@ The source must be an MP3, M4A, OGG, or WAV file directly inside the article’s
 - `/api/search` is statically generated into English and Mandarin Orama indexes.
 - `/rss.xml` is generated from English posts.
 - `/llms.txt` lists published content for AI discovery.
-- `/llms.mdx/posts/<locale>/<slug>/content.md` provides clean article Markdown used by the copy action.
+- `/llms.mdx/posts/<locale>/<slug>/content.md` provides the authored MDX source, including frontmatter, used by the copy action.
 - `/og/posts/<locale>/<slug>/image.png` provides generated article imagery.
 
 All internal links, generated URLs, search assets, feeds, comments themes, and article media must respect `NEXT_PUBLIC_BASE_PATH`.
@@ -162,11 +164,12 @@ Credentials, tokens, private keys, and local environment files must not be commi
 
 The deployment workflow runs on pushes to `main` and through manual dispatch. It:
 
-1. Installs dependencies with `npm ci`.
-2. Runs ESLint and TypeScript checks.
-3. Obtains the public site URL and base path from `actions/configure-pages`.
-4. Builds the static export in `out/`.
-5. Uploads and deploys the GitHub Pages artifact.
+1. Checks out the repository and configures Node.js 24.
+2. Obtains the public site URL and base path from `actions/configure-pages`.
+3. Installs dependencies with `npm ci`.
+4. Runs ESLint and TypeScript checks.
+5. Builds the static export in `out/`.
+6. Uploads and deploys the GitHub Pages artifact.
 
 Keep deployment on the official GitHub Pages artifact flow. Do not hard-code the repository base path in application code or the workflow.
 
@@ -213,7 +216,7 @@ For implementation work:
 
 1. Confirm that the change fits the architecture and static-export constraints.
 2. Add or update focused tests when behavior is meaningfully testable.
-3. Run formatting, linting, type checking, and production builds that apply to the change.
+3. Run linting, type checking, and production builds that apply to the change.
 4. Verify static output for changes to routes, content loading, search, feeds, images, audio, comments themes, metadata, or deployment.
 5. Update root documentation when commands, structure, or product decisions change.
 

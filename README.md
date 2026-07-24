@@ -37,5 +37,3 @@ To publish with GitHub Pages:
 2. Enable GitHub Discussions and configure [Giscus](https://giscus.app/) if comments are needed.
 3. Add `GISCUS_REPO_ID`, `GISCUS_CATEGORY`, and `GISCUS_CATEGORY_ID` under **Settings → Secrets and variables → Actions → Variables**.
 4. Push to `main` or run the **Deploy to GitHub Pages** workflow manually.
-
-See [AGENTS.md](./AGENTS.md) for the current architecture, content model, development commands, and implementation constraints.

@@ -10,6 +10,7 @@ export const docs = defineDocs({
   docs: {
     schema: pageSchema.extend({
       description: z.string().min(1),
+      category: z.enum(['resource', 'insight', 'research']),
       publishedAt: z.iso.date(),
       updatedAt: z.iso.date(),
       readingTime: z.number().int().positive(),

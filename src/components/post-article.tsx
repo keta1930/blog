@@ -5,6 +5,7 @@ import { PostComments } from '@/components/post-comments';
 import { PostToc } from '@/components/post-toc';
 import type { SiteLocale } from '@/lib/i18n';
 import {
+  formatPostCategory,
   formatPostDate,
   formatReadingTime,
   getAdjacentPosts,
@@ -41,7 +42,7 @@ export async function PostArticle({
           <Link href={isChinese ? '/zh/posts' : '/posts'} className="post-back-link">
             ← {isChinese ? '全部文章' : 'All posts'}
           </Link>
-          <p className="post-kicker">POST</p>
+          <p className="post-kicker">{formatPostCategory(post.data.category, locale)}</p>
           <h1>{post.data.title}</h1>
           <p className="post-description">{post.data.description}</p>
           <div className="post-meta-row">

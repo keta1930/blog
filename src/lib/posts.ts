@@ -40,6 +40,19 @@ export function formatReadingTime(minutes: number, locale: SiteLocale): string {
   return locale === 'zh' ? `约 ${minutes} 分钟读完` : `${minutes} min read`;
 }
 
+export function formatPostCategory(
+  category: PostPage['data']['category'],
+  locale: SiteLocale,
+): string {
+  const labels = {
+    resource: { en: 'RESOURCE', zh: '资源' },
+    insight: { en: 'INSIGHT', zh: '观点' },
+    research: { en: 'RESEARCH', zh: '研究' },
+  } as const;
+
+  return labels[category][locale];
+}
+
 export function getPostAudioUrl(post: PostPage): string | undefined {
   const sourcePath = post.data.audio?.src;
   if (!sourcePath) return undefined;

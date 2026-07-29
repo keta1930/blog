@@ -115,7 +115,7 @@ readingTime: 5
 
 Schema rules:
 
-- `category` is `resource`, `insight`, or `research`; paired language files use the same value.
+- `category` is `resource`, `insight`, `research`, or `project`; paired language files use the same value.
 - `slug` uses lowercase letters, numbers, and hyphens.
 - `publishedAt` and `updatedAt` use `YYYY-MM-DD`.
 - `readingTime` is a positive integer in minutes.

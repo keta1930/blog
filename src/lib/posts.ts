@@ -48,6 +48,7 @@ export function formatPostCategory(
     resource: { en: 'RESOURCE', zh: '资源' },
     insight: { en: 'INSIGHT', zh: '观点' },
     research: { en: 'RESEARCH', zh: '研究' },
+    project: { en: 'PROJECT', zh: '项目' },
   } as const;
 
   return labels[category][locale];

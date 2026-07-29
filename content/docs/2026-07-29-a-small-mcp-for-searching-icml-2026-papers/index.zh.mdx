@@ -1,0 +1,75 @@
+---
+title: 'ICML Paper Search MCP'
+slug: a-small-mcp-for-searching-icml-2026-papers
+category: project
+description: '一个开源 MCP 服务，让 AI Agent 可以检索 6,341 篇 ICML 2026 论文。'
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+readingTime: 2
+---
+
+## 一、ICML Paper Search MCP
+
+![ICML Paper Search MCP 封面](./assets/vintage-paper-search-cover.webp)
+
+ICML Paper Search MCP 是一个开源的论文检索服务，让 AI Agent 可以检索 6,341 篇 ICML 2026 论文。
+
+包含 6 个工具：
+
+| 工具 | 用途 |
+|---|---|
+| `open_search_session` | 创建搜索会话并返回 `session_id` |
+| `search_papers` | 搜索论文，可使用筛选条件和会话去重 |
+| `search_session_status` | 查看一个搜索会话的进度 |
+| `close_search_session` | 关闭会话并返回简短汇总 |
+| `get_papers` | 按 OpenReview ID 获取论文 |
+| `list_paper_areas` | 列出可用的研究领域和论文类型 |
+
+同一会话已经返回过的论文不会再次出现。不传 `session_id` 时，搜索不会保留记录；不同会话之间互不影响。
+
+## 二、添加到 Agent
+
+公共 MCP 地址：
+
+```text
+https://icml.agent4sci.com:20441/mcp
+```
+
+添加到 Claude Code：
+
+```bash
+claude mcp add --transport http icml-papers --scope user \
+  https://icml.agent4sci.com:20441/mcp
+```
+
+其他支持 Streamable HTTP MCP 的 Agent 可以使用：
+
+```json
+{
+  "mcpServers": {
+    "icml-papers": {
+      "type": "http",
+      "url": "https://icml.agent4sci.com:20441/mcp"
+    }
+  }
+}
+```
+
+公共实例免费试用。
+
+## 三、开源地址、文档与本地部署
+
+- 开源地址：[github.com/keta1930/icml2026-mcp](https://github.com/keta1930/icml2026-mcp)
+- 中文文档：[项目文档](https://keta1930.github.io/icml2026-mcp/zh/docs/)
+- 本地部署：[部署说明](https://keta1930.github.io/icml2026-mcp/zh/docs/getting-started/local-deployment/)
+
+项目采用 MIT License。本地部署需要 Python 3.12+、`uv`，以及能够使用 `qwen3.7-text-embedding` 的 DashScope API key。[注：私有化部署可以用本地embedding模型替换qwen]
+
+## 四、后续发展
+
+后续工作有两个重点：
+
+1. 提高检索稳定性，减少搜索结果对具体措辞的依赖。
+2. 在确认许可、字段、论文标识、更新方式和数据质量后，增加更多开放学术数据源。
+
+当前计划记录在[长期方向](https://keta1930.github.io/icml2026-mcp/zh/docs/roadmap/)中。

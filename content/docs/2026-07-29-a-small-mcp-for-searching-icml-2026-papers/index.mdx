@@ -1,0 +1,75 @@
+---
+title: 'ICML Paper Search MCP'
+slug: a-small-mcp-for-searching-icml-2026-papers
+category: project
+description: 'An open-source MCP service that lets AI agents search 6,341 ICML 2026 papers.'
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+readingTime: 2
+---
+
+## 1. ICML Paper Search MCP
+
+![ICML Paper Search MCP cover](./assets/vintage-paper-search-cover.webp)
+
+ICML Paper Search MCP is an open-source paper search service that lets AI agents search 6,341 ICML 2026 papers.
+
+The MCP provides six tools:
+
+| Tool | Purpose |
+|---|---|
+| `open_search_session` | Create a search session and return its `session_id` |
+| `search_papers` | Search papers with filters and session deduplication |
+| `search_session_status` | Show the progress of one search session |
+| `close_search_session` | Close a session and return a short summary |
+| `get_papers` | Retrieve papers by OpenReview ID |
+| `list_paper_areas` | List available research areas and paper types |
+
+Papers already returned in a session will not appear again. A search without a `session_id` is not recorded, and sessions do not share state.
+
+## 2. Add the MCP to an agent
+
+Public MCP endpoint:
+
+```text
+https://icml.agent4sci.com:20441/mcp
+```
+
+Add it to Claude Code:
+
+```bash
+claude mcp add --transport http icml-papers --scope user \
+  https://icml.agent4sci.com:20441/mcp
+```
+
+Other agents with Streamable HTTP MCP support can use:
+
+```json
+{
+  "mcpServers": {
+    "icml-papers": {
+      "type": "http",
+      "url": "https://icml.agent4sci.com:20441/mcp"
+    }
+  }
+}
+```
+
+The public instance is free to try.
+
+## 3. Source code, documentation, and local deployment
+
+- Source code: [github.com/keta1930/icml2026-mcp](https://github.com/keta1930/icml2026-mcp)
+- Documentation: [English documentation](https://keta1930.github.io/icml2026-mcp/en/docs/)
+- Local setup: [Local deployment](https://keta1930.github.io/icml2026-mcp/en/docs/getting-started/local-deployment/)
+
+The project is released under the MIT License. Local deployment requires Python 3.12+, `uv`, and a DashScope API key with access to `qwen3.7-text-embedding`. [Note: A private deployment can replace the DashScope embedding service with a local model.]
+
+## 4. Further development
+
+Further work has two priorities:
+
+1. Improve retrieval stability when the same research question is expressed with different wording.
+2. Add more open scholarly sources after checking their licenses, fields, identifiers, update procedures, and data quality.
+
+Current plans are recorded in the [roadmap](https://keta1930.github.io/icml2026-mcp/en/docs/roadmap/).

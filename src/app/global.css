@@ -988,6 +988,59 @@ a {
   content: '/';
 }
 
+.post-actions {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.post-like-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease, opacity 160ms ease;
+}
+
+.post-like-button:hover {
+  border-color: var(--rust);
+}
+
+.post-like-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.post-like-button-count {
+  color: var(--rust);
+  font-weight: 700;
+}
+
+.post-like-button.is-liked {
+  border-color: var(--rust);
+  background: color-mix(in srgb, var(--rust) 8%, transparent);
+  color: var(--rust);
+}
+
+.post-like-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.post-like-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .post-audio-player {
   padding: 21px 0 19px;
   border-bottom: 1px solid var(--line);

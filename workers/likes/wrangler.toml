@@ -1,0 +1,15 @@
+name = "blog-likes"
+main = "src/index.ts"
+compatibility_date = "2026-09-04"
+workers_dev = true
+preview_urls = false
+
+# 运行 `npx wrangler d1 create blog-likes` 后，将输出中的 database_id 填入此处
+[[d1_databases]]
+binding = "DB"
+database_name = "blog-likes"
+database_id = "1a8a8d5e-677a-4970-b215-cb6a7f70ddc2"
+migrations_dir = "migrations"
+
+[vars]
+ALLOWED_ORIGINS = "https://keta1930.github.io,http://localhost:20450"

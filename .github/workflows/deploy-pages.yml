@@ -49,6 +49,7 @@ jobs:
           NEXT_PUBLIC_GISCUS_REPO_ID: ${{ vars.GISCUS_REPO_ID }}
           NEXT_PUBLIC_GISCUS_CATEGORY: ${{ vars.GISCUS_CATEGORY }}
           NEXT_PUBLIC_GISCUS_CATEGORY_ID: ${{ vars.GISCUS_CATEGORY_ID }}
+          NEXT_PUBLIC_LIKES_API_URL: ${{ vars.LIKES_API_URL }}
         run: npm run build
 
       - name: Upload GitHub Pages artifact

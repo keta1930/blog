@@ -2,6 +2,7 @@ import { CopyMarkdownButton } from '@/components/copy-markdown-button';
 import { getMDXComponents } from '@/components/mdx';
 import { PostAudioPlayer } from '@/components/post-audio-player';
 import { PostComments } from '@/components/post-comments';
+import { PostLikeButton } from '@/components/post-like-button';
 import { PostToc } from '@/components/post-toc';
 import type { SiteLocale } from '@/lib/i18n';
 import {
@@ -58,7 +59,10 @@ export async function PostArticle({
               ) : null}
               <span>{formatReadingTime(post.data.readingTime, locale)}</span>
             </div>
-            <CopyMarkdownButton markdownUrl={markdownUrl} isChinese={isChinese} />
+            <div className="post-actions">
+              <CopyMarkdownButton markdownUrl={markdownUrl} isChinese={isChinese} />
+              <PostLikeButton slug={post.data.slug} isChinese={isChinese} />
+            </div>
           </div>
         </header>
 

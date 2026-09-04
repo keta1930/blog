@@ -1,3 +1,4 @@
+import { PostLikeCount } from '@/components/post-like-count';
 import type { SiteLocale } from '@/lib/i18n';
 import {
   formatPostCategory,
@@ -24,6 +25,7 @@ export function PostListItem({
         <p className="post-meta-line">
           <span>{formatPostCategory(post.data.category, locale)}</span>
           <span>{formatReadingTime(post.data.readingTime, locale)}</span>
+          <PostLikeCount slug={post.data.slug} />
         </p>
         <h2>{post.data.title}</h2>
         <p className="archive-description">{post.data.description}</p>

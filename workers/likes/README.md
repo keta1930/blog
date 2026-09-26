@@ -12,14 +12,6 @@
 
 CORS 仅允许 `wrangler.toml` 中 `ALLOWED_ORIGINS` 列出的来源。
 
-## 投票人身份
-
-去重键是投票人身份的 salted SHA-256 哈希，数据库中不落盘原始标识：
-
-- 携带合法 `voter`（16–64 位 `[A-Za-z0-9_-]`）时，身份为该浏览器在 localStorage `post-voter-id` 中持有的随机 UUID，因此同一网络下的不同设备互不影响；携带但格式非法时返回 400。
-- 未携带 `voter` 时（旧版客户端，或浏览器禁用了 localStorage），回退到 `CF-Connecting-IP` 哈希，此时同一公网 IP 下的设备共享一个身份。
-- 早于本次变更写入的 `voters` 行基于 IP 哈希，格式与浏览器 ID 不匹配，不会再被任何请求命中或删除；`likes` 计数不变。
-
 ## 一次性部署
 
 ```bash

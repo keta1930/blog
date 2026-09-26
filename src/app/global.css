@@ -1233,6 +1233,36 @@ a {
   line-height: 1.85;
 }
 
+/* 标题在渲染时被包成 <a data-card>，这里按结构限定，只作用于正文内的链接 */
+.post-body :where(p, li, td, th, blockquote) a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--rust);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color 160ms ease;
+}
+
+.post-body :where(p, li, td, th, blockquote) a:hover {
+  color: var(--rust);
+}
+
+.post-body :where(p, li, td, th, blockquote) a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* 行内代码：对齐代码块的等宽字体与圆角，排除代码块内的 code */
+.post-body :where(p, li, td, th, blockquote) code:not(pre code) {
+  padding: 0.1em 0.34em;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--paper-deep);
+  color: var(--rust);
+  font-family: 'Courier New', monospace;
+  font-size: 0.87em;
+}
+
 .post-comments {
   margin-top: 78px;
   padding-top: 28px;

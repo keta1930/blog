@@ -1333,6 +1333,8 @@ a {
   background: transparent;
   color: var(--ink);
   font-family: Georgia, 'Times New Roman', serif;
+  /* 同 h2/h3：Georgia 默认 old-style 数字，表格里的数字也换成 lining */
+  font-variant-numeric: lining-nums tabular-nums;
   font-size: 0.9rem;
   line-height: 1.6;
 }

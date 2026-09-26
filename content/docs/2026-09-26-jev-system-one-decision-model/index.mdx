@@ -19,11 +19,11 @@ It was researched and trained by **TypeSafe AI, Inc.**, a San Francisco startup,
 - [TypeSafe announcement post](https://typesafe.ai/blog/introducing-system-one-models-and-jev)
 - [Official product documentation](https://docs.typesafe.ai/introduction)
 
-The current public stable version is `jev-1.13.0`:
+The current public stable version is jev-1.13.0:
 
-- `jev-latest` → currently stable `jev-1.13.0`
-- `jev-preview` → also points to `jev-1.13.0` right now
-- Text input, 64K total request context; `state + longest question` is capped at 32K
+- jev-latest → currently stable jev-1.13.0
+- jev-preview → also points to jev-1.13.0 right now
+- Text input, 64K total request context; state + longest question is capped at 32K
 - Official pricing is $0.042 per million input tokens, with output not charged
 - The docs currently list rate limits of 250K tokens/second and 1,200 requests/minute, which the company says may still be adjusted dynamically
 
@@ -218,19 +218,19 @@ if __name__ == "__main__":
 
 | Parameter | Type | Description |
 |---|---|---|
-| `state` | string/object/array | The text or structured program state to be judged |
-| `model` | string | Usually `jev-latest`, or a pinned version such as `jev-1.13.0` |
-| `questions` | map | One or more named questions; all of them share the same state |
+| state | string/object/array | The text or structured program state to be judged |
+| model | string | Usually jev-latest, or a pinned version such as jev-1.13.0 |
+| questions | map | One or more named questions; all of them share the same state |
 
-`state`, `instructions`, and every criterion accept strings, objects, or arrays, which makes it easy to pass structured data. ([HTTP API reference](https://docs.typesafe.ai/api))
+state, instructions, and every criterion accept strings, objects, or arrays, which makes it easy to pass structured data. ([HTTP API reference](https://docs.typesafe.ai/api))
 
 ### 5.2 The three question types
 
 | Type | Parameters | Returns |
 |---|---|---|
-| `noul` | `type`, `instructions`; optional `criteria.true/false` | A 0–1 probability that the proposition is true |
-| `choice` | `type`, `instructions`, a `criteria` option map; up to 255 options | The most likely option, the full probability distribution, confidence |
-| `score` | `type`, `instructions`, 2–10 ordered `criteria` | A probability-weighted score, per-level probabilities, confidence |
+| noul | type, instructions; optional criteria.true/false | A 0–1 probability that the proposition is true |
+| choice | type, instructions, a criteria option map; up to 255 options | The most likely option, the full probability distribution, confidence |
+| score | type, instructions, 2–10 ordered criteria | A probability-weighted score, per-level probabilities, confidence |
 
 ### 5.3 Noul
 
@@ -238,9 +238,9 @@ As of 2026-09-26, TypeSafe has not published what "Noul" stands for or where the
 
 It is a TypeSafe-specific type name, and functionally it is best understood as a probabilistic Boolean.
 
-- The return value is the probability that the proposition is true: `P(yes)`.
-- `0` means a strong No, `1` means a strong Yes, and `0.5` means the two sides are close.
-- Noul has no separate `confidence`, because `P(no) = 1 - P(yes)` — a single number already expresses the whole binary distribution.
+- The return value is the probability that the proposition is true: P(yes).
+- 0 means a strong No, 1 means a strong Yes, and 0.5 means the two sides are close.
+- Noul has no separate confidence, because P(no) = 1 - P(yes) — a single number already expresses the whole binary distribution.
 
 From this response:
 
@@ -261,7 +261,7 @@ Reference: [Noul documentation](https://docs.typesafe.ai/primitives/noul)
 
 ### 5.4 Choice
 
-`Choice`: unordered classification, picking one out of fixed categories.
+Choice: unordered classification, picking one out of fixed categories.
 
 Choice picks one option from categories that have no order. Departments have no magnitude or sequence among them, so this must not be read as:
 
@@ -290,7 +290,7 @@ Reference: [Choice documentation](https://docs.typesafe.ai/primitives/choice)
 
 ### 5.5 Score
 
-`Score`: an ordered scale, positioning an answer on a low-to-high range.
+Score: an ordered scale, positioning an answer on a low-to-high range.
 
 Array position defines the level automatically:
 
@@ -315,13 +315,13 @@ From this response:
 }
 ```
 
-`score` is a probability-weighted average:
+score is a probability-weighted average:
 
 ```text
 score = 0 × 0 + 1 × 0.12 + 2 × 0.88 = 1.88
 ```
 
-`1.88` means the judgment falls between level 1 and level 2, leaning clearly toward level 2 — it is not the model choosing a category named `1.88`.
+1.88 means the judgment falls between level 1 and level 2, leaning clearly toward level 2 — it is not the model choosing a category named 1.88.
 
 Reference: [Score documentation](https://docs.typesafe.ai/primitives/score)
 
@@ -331,21 +331,21 @@ Both of them:
 
 - assign probabilities across candidates;
 - return the full probability distribution;
-- return a `confidence` derived from that distribution.
+- return a confidence derived from that distribution.
 
 But they answer different questions:
 
-- `Choice`: unordered classification — which category fits best?
-- `Score`: ordered scale — where on the low-to-high continuum does this sit?
+- Choice: unordered classification — which category fits best?
+- Score: ordered scale — where on the low-to-high continuum does this sit?
 
 | Property | Choice | Score |
 |---|---|---|
 | Question type | Unordered classification, N-choice-1 | Ordered level, degree assessment |
-| `criteria` | Object/map | Ordered array |
+| criteria | Object/map | Ordered array |
 | Order among options | None | Yes, low to high |
 | Maximum count | Up to 255 options | 2–10 levels |
-| Main return value | Highest-probability `choice` | Probability-weighted `score` |
-| Can it return a decimal | `choice` itself cannot | `score` can land between two levels |
+| Main return value | Highest-probability choice | Probability-weighted score |
+| Can it return a decimal | choice itself cannot | score can land between two levels |
 | Typical uses | Department, language, product category, tool selection | Severity, satisfaction, quality, experience level |
 
 ### 5.7 How to choose among the three primitives
@@ -365,11 +365,11 @@ Is the answer a degree from low to high, bad to good, mild to severe?
 
 For this ticket:
 
-- "Does the customer ask for a refund?" → `Noul`
-- "Which category does the ticket belong to?" → `Choice`
-- "How urgent is the ticket?" → `Score`
+- "Does the customer ask for a refund?" → Noul
+- "Which category does the ticket belong to?" → Choice
+- "How urgent is the ticket?" → Score
 
-TypeSafe recommends writing each Score level as a concrete situation rather than just `low/medium/high` or `0/1/2`. Jev matches the input state against each level's text description separately; sharper descriptions usually give cleaner level boundaries.
+TypeSafe recommends writing each Score level as a concrete situation rather than just low/medium/high or 0/1/2. Jev matches the input state against each level's text description separately; sharper descriptions usually give cleaner level boundaries.
 
 ### 5.8 usage
 
@@ -381,9 +381,9 @@ TypeSafe recommends writing each Score level as a concrete situation rather than
 }
 ```
 
-- `input_tokens`: input tokens used by the request.
-- `output_tokens`: output tokens reported by the response.
-- `cost`: the cost reported for this call through OpenRouter.
+- input_tokens: input tokens used by the request.
+- output_tokens: output tokens reported by the response.
+- cost: the cost reported for this call through OpenRouter.
 
 TypeSafe's official price is $0.042 per million input tokens, with output not charged.
 

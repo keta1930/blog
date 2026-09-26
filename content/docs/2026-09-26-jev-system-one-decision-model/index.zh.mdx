@@ -19,11 +19,11 @@ Jev 是 TypeSafe AI 推出的“System One”决策模型。它不是用来聊�
 - [TypeSafe 官方发布文章](https://typesafe.ai/blog/introducing-system-one-models-and-jev)
 - [官方产品文档](https://docs.typesafe.ai/introduction)
 
-当前公开稳定版本是 `jev-1.13.0`：
+当前公开稳定版本是 jev-1.13.0：
 
-- `jev-latest` → 当前稳定版本 `jev-1.13.0`
-- `jev-preview` → 当前也指向 `jev-1.13.0`
-- 文本输入，64K 总请求上下文；其中 `state + 最长问题` 上限为 32K
+- jev-latest → 当前稳定版本 jev-1.13.0
+- jev-preview → 当前也指向 jev-1.13.0
+- 文本输入，64K 总请求上下文；其中 state + 最长问题 上限为 32K
 - 官方标价为每百万输入 token 0.042 美元，输出不收费
 - 当前文档标注限流为 25 万 token/秒、1200 请求/分钟，但官方称仍可能动态调整
 
@@ -218,19 +218,19 @@ if __name__ == "__main__":
 
 | 参数 | 类型 | 说明 |
 |---|---|---|
-| `state` | string/object/array | 待判断的文本或结构化程序状态 |
-| `model` | string | 通常为 `jev-latest` 或固定版本 `jev-1.13.0` |
-| `questions` | map | 一个或多个命名问题，所有问题共享同一份 state |
+| state | string/object/array | 待判断的文本或结构化程序状态 |
+| model | string | 通常为 jev-latest 或固定版本 jev-1.13.0 |
+| questions | map | 一个或多个命名问题，所有问题共享同一份 state |
 
-`state`、`instructions` 和每个标准都可以使用字符串、对象或数组，方便传递结构化数据。[官方 API Reference](https://docs.typesafe.ai/api)
+state、instructions 和每个标准都可以使用字符串、对象或数组，方便传递结构化数据。[官方 API Reference](https://docs.typesafe.ai/api)
 
 ### 5.2 三种问题类型
 
 | 类型 | 参数 | 返回 |
 |---|---|---|
-| `noul` | `type`、`instructions`；可选 `criteria.true/false` | 0～1 的“为真”概率 |
-| `choice` | `type`、`instructions`、`criteria` 选项表；最多 255 个选项 | 最可能选项、完整概率分布、confidence |
-| `score` | `type`、`instructions`、2～10 个有序 `criteria` | 概率加权分数、各档概率、confidence |
+| noul | type、instructions；可选 criteria.true/false | 0～1 的“为真”概率 |
+| choice | type、instructions、criteria 选项表；最多 255 个选项 | 最可能选项、完整概率分布、confidence |
+| score | type、instructions、2～10 个有序 criteria | 概率加权分数、各档概率、confidence |
 
 ### 5.3 Noul
 
@@ -238,9 +238,9 @@ if __name__ == "__main__":
 
 它是 TypeSafe 自定义的类型名称，功能上可以理解为“概率型 Boolean”。
 
-- 返回值是命题为真的概率：`P(yes)`。
-- `0` 表示强烈倾向 No，`1` 表示强烈倾向 Yes，`0.5` 表示两边接近。
-- Noul 没有单独的 `confidence`，因为 `P(no) = 1 - P(yes)`，一个数已经可以表示完整二元分布。
+- 返回值是命题为真的概率：P(yes)。
+- 0 表示强烈倾向 No，1 表示强烈倾向 Yes，0.5 表示两边接近。
+- Noul 没有单独的 confidence，因为 P(no) = 1 - P(yes)，一个数已经可以表示完整二元分布。
 
 本次响应：
 
@@ -261,7 +261,7 @@ P（客户实际要求退回款项）= 0.96
 
 ### 5.4 Choice
 
-`Choice`：无序分类，从固定类别中选择一个。
+Choice：无序分类，从固定类别中选择一个。
 
 Choice 用于从没有顺序的类别中选一个。部门类别之间没有大小或先后关系，因此不能解释成：
 
@@ -290,7 +290,7 @@ billing < technical < account
 
 ### 5.5 Score
 
-`Score`：有序量表，在一个从低到高的尺度上定位。
+Score：有序量表，在一个从低到高的尺度上定位。
 
 数组位置自动形成等级：
 
@@ -315,13 +315,13 @@ billing < technical < account
 }
 ```
 
-`score` 是概率加权平均：
+score 是概率加权平均：
 
 ```text
 score = 0 × 0 + 1 × 0.12 + 2 × 0.88 = 1.88
 ```
 
-`1.88` 表示判断落在等级 1 和等级 2 之间，明显偏向等级 2，并不是模型选择了一个名为 `1.88` 的类别。
+1.88 表示判断落在等级 1 和等级 2 之间，明显偏向等级 2，并不是模型选择了一个名为 1.88 的类别。
 
 资料：[Score 官方文档](https://docs.typesafe.ai/primitives/score)
 
@@ -331,21 +331,21 @@ score = 0 × 0 + 1 × 0.12 + 2 × 0.88 = 1.88
 
 - 对多个候选项分配概率；
 - 返回完整概率分布；
-- 返回从概率分布推导的 `confidence`。
+- 返回从概率分布推导的 confidence。
 
 但二者表达的是不同的问题：
 
-- `Choice`：无序分类，哪一个类别最合适？
-- `Score`：有序量表，在从低到高的连续谱上处于什么位置？
+- Choice：无序分类，哪一个类别最合适？
+- Score：有序量表，在从低到高的连续谱上处于什么位置？
 
 | 特性 | Choice | Score |
 |---|---|---|
 | 问题类型 | 无序分类、N 选 1 | 有序等级、程度评估 |
-| `criteria` | 对象/map | 有顺序的数组 |
+| criteria | 对象/map | 有顺序的数组 |
 | 选项之间是否有顺序 | 没有 | 有，从低到高 |
 | 最大数量 | 最多 255 个选项 | 2～10 个等级 |
-| 主要返回值 | 最高概率选项 `choice` | 概率加权位置 `score` |
-| 是否可能返回小数 | `choice` 本身不会 | `score` 可以位于两个等级之间 |
+| 主要返回值 | 最高概率选项 choice | 概率加权位置 score |
+| 是否可能返回小数 | choice 本身不会 | score 可以位于两个等级之间 |
 | 典型场景 | 部门、语言、产品类别、工具选择 | 严重程度、满意度、质量、经验水平 |
 
 ### 5.7 三种原语的选择方法
@@ -365,11 +365,11 @@ score = 0 × 0 + 1 × 0.12 + 2 × 0.88 = 1.88
 
 对应本次工单：
 
-- “客户是否要求退款？” → `Noul`
-- “工单属于哪个类别？” → `Choice`
-- “工单有多紧急？” → `Score`
+- “客户是否要求退款？” → Noul
+- “工单属于哪个类别？” → Choice
+- “工单有多紧急？” → Score
 
-官方建议 Score 的每个等级使用具体情境描述，不要只写 `低/中/高` 或 `0/1/2`。Jev 会分别将输入状态与每个等级的文字描述进行匹配；描述越明确，等级边界通常越清楚。
+官方建议 Score 的每个等级使用具体情境描述，不要只写 低/中/高 或 0/1/2。Jev 会分别将输入状态与每个等级的文字描述进行匹配；描述越明确，等级边界通常越清楚。
 
 ### 5.8 usage
 
@@ -381,9 +381,9 @@ score = 0 × 0 + 1 × 0.12 + 2 × 0.88 = 1.88
 }
 ```
 
-- `input_tokens`：请求使用的输入 token 数。
-- `output_tokens`：响应中报告的输出 token 数。
-- `cost`：本次通过 OpenRouter 调用所报告的成本。
+- input_tokens：请求使用的输入 token 数。
+- output_tokens：响应中报告的输出 token 数。
+- cost：本次通过 OpenRouter 调用所报告的成本。
 
 TypeSafe 官方标价为每百万输入 token 0.042 美元，输出不收费。
 

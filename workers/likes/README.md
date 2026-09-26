@@ -1,15 +1,24 @@
 # blog-likes Worker
 
-文章点赞计数 API。Cloudflare Worker + D1（SQLite），匿名点赞（按 salted IP 哈希去重，计数为原子 SQL 自增），支持取消。
+文章点赞计数 API。Cloudflare Worker + D1（SQLite），匿名点赞（按浏览器级匿名 ID 的 salted 哈希去重，计数为原子 SQL 自增），支持取消。
 
 ## 接口
 
 | 方法 | 路径 | 说明 |
 | --- | --- | --- |
 | `GET` | `/likes/<slug>` | 返回 `{ slug, count }` |
-| `POST` | `/likes/<slug>` | 请求体 `{ "action": "like" \| "unlike" }`，返回 `{ slug, count, liked }` |
+| `GET` | `/likes/<slug>?voter=<id>` | 额外返回该投票人的 `liked` 状态 |
+| `POST` | `/likes/<slug>` | 请求体 `{ "action": "like" \| "unlike", "voter": "<id>" }`，返回 `{ slug, count, liked }` |
 
 CORS 仅允许 `wrangler.toml` 中 `ALLOWED_ORIGINS` 列出的来源。
+
+## 投票人身份
+
+去重键是投票人身份的 salted SHA-256 哈希，数据库中不落盘原始标识：
+
+- 携带合法 `voter`（16–64 位 `[A-Za-z0-9_-]`）时，身份为该浏览器在 localStorage `post-voter-id` 中持有的随机 UUID，因此同一网络下的不同设备互不影响；携带但格式非法时返回 400。
+- 未携带 `voter` 时（旧版客户端，或浏览器禁用了 localStorage），回退到 `CF-Connecting-IP` 哈希，此时同一公网 IP 下的设备共享一个身份。
+- 早于本次变更写入的 `voters` 行基于 IP 哈希，格式与浏览器 ID 不匹配，不会再被任何请求命中或删除；`likes` 计数不变。
 
 ## 一次性部署
 

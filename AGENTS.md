@@ -19,7 +19,7 @@ The production site is <https://keta1930.github.io/blog>. The experience is calm
 | Delivery | Static export deployed by `.github/workflows/deploy-pages.yml` |
 | Search | Fumadocs static search with separate English and Mandarin Orama indexes |
 | Comments | Giscus backed by GitHub Discussions, with project-owned light and dark themes |
-| Likes | Anonymous per-post upvote counts served by a Cloudflare Worker backed by D1 (`workers/likes/`) |
+| Likes | Anonymous per-post upvote counts served by a Cloudflare Worker backed by D1 (`workers/likes/`), deduplicated per browser |
 | Audio | Optional per-language article audio declared in frontmatter |
 | App identity | Web app manifest with tree artwork derived from the first post’s visual language |
 | Syndication | RSS at `/rss.xml` |
@@ -164,7 +164,7 @@ Credentials, tokens, private keys, and local environment files must not be commi
 
 ## Likes
 
-Article pages render an anonymous Hugging Face–style upvote button, and post archive items display like counts, only when `NEXT_PUBLIC_LIKES_API_URL` is available. Counts are served by a Cloudflare Worker backed by a D1 (SQLite) database under `workers/likes/`; counting uses atomic SQL upserts and per-voter deduplication. See that directory’s README for the one-time deployment steps.
+Article pages render an anonymous Hugging Face–style upvote button, and post archive items display like counts, only when `NEXT_PUBLIC_LIKES_API_URL` is available. Counts are served by a Cloudflare Worker backed by a D1 (SQLite) database under `workers/likes/`; counting uses atomic SQL upserts and deduplication by a browser-level anonymous ID, falling back to an IP hash for clients that carry none. See that directory’s README for the one-time deployment steps.
 
 For local development, set `NEXT_PUBLIC_LIKES_API_URL` in `.env.local` to the deployed Worker URL (or a local `wrangler dev` origin). For GitHub Pages, the workflow reads `LIKES_API_URL` from Actions Variables. The Worker sits outside the static export; the site itself keeps no backend.
 

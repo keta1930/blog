@@ -1302,6 +1302,8 @@ a {
   font-family: Georgia, 'Times New Roman', serif;
   font-weight: 400;
   letter-spacing: -0.035em;
+  /* Georgia 默认 old-style 数字，标题编号高低不齐；换 lining 数字统一高度，宽度交给 tabular-nums */
+  font-variant-numeric: lining-nums tabular-nums;
 }
 
 .post-body h2 {
